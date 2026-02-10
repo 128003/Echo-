@@ -3,31 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MSK Ultrasound Report Generator</title>
+    <title>Upper Limb Ultrasound Report System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { background-color: #f4f6f8; padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .container { max-width: 1000px; margin: 0 auto; }
+        .container { max-width: 1100px; margin: 0 auto; }
         
-        /* 導航區塊 */
+        /* Navigation & Header */
         .nav-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .part-btn { margin: 5px; font-weight: 600; min-width: 100px; }
         .part-btn.active { background-color: #0d6efd; color: white; border-color: #0d6efd; }
         
-        /* 內容區塊 */
-        .content-section { display: none; } /* 預設隱藏 */
+        /* Content Sections */
+        .content-section { display: none; }
         .content-section.active { display: block; animation: fadeIn 0.3s; }
         
         .card-header-custom { background-color: #2c3e50; color: white; font-weight: bold; padding: 10px 15px; border-radius: 8px 8px 0 0; }
-        .sub-header { background-color: #e9ecef; color: #495057; padding: 8px 15px; font-weight: 700; border-left: 5px solid #0d6efd; margin-top: 15px; margin-bottom: 10px; }
+        .section-label { background-color: #e9ecef; color: #495057; padding: 8px 15px; font-weight: 700; border-left: 5px solid #0d6efd; margin-top: 15px; margin-bottom: 10px; }
         
-        /* 選項樣式 */
-        .finding-row { padding: 10px 15px; border-bottom: 1px solid #eee; background: white; }
-        .structure-label { font-weight: 700; color: #0d6efd; display: block; margin-bottom: 5px; }
-        .sub-options { display: none; margin-left: 20px; padding: 8px; background-color: #f8f9fa; border-left: 2px solid #adb5bd; margin-top: 5px; border-radius: 4px; }
+        /* Finding Rows */
+        .finding-row { padding: 12px 15px; border-bottom: 1px solid #eee; background: white; }
+        .structure-label { font-weight: 700; color: #0d6efd; display: block; margin-bottom: 5px; font-size: 1.05rem; }
         
-        /* 報告輸出 */
-        .report-box { background: #fff; border: 2px solid #2c3e50; padding: 20px; min-height: 150px; white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; }
+        /* Sub-options Styles */
+        .sub-options { display: none; margin-left: 20px; padding: 10px; background-color: #f1f3f5; border-left: 3px solid #adb5bd; margin-top: 8px; border-radius: 4px; }
+        .imp-sub-options { display: none; margin-left: 25px; padding: 5px 10px; border-left: 2px solid #198754; margin-top: 5px; }
+
+        /* Report Box */
+        .report-box { background: #fff; border: 2px solid #2c3e50; padding: 20px; min-height: 200px; white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; line-height: 1.5; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -70,15 +73,15 @@
                 
                 <div class="finding-row">
                     <span class="structure-label">Biceps brachialis long head</span>
-                    <label class="me-3"><input type="checkbox" class="form-check-input struct-intact" value="intact"> Normal</label>
-                    <label class="me-3"><input type="checkbox" class="form-check-input val" value="heterogenous and hypoechoic change with loss of fibrillar pattern"> Heterogenous/Hypoechoic</label>
-                    <label class="me-3"><input type="checkbox" class="form-check-input val" value="peritendinous effusion (target sign)"> Target sign</label>
+                    <label class="me-3"><input type="checkbox" class="form-check-input struct-intact" value="intact"> Intact</label>
+                    <label class="me-3"><input type="checkbox" class="form-check-input val" value="hypoechoic and heterogenous change"> Hypoechoic/Heterogenous</label>
+                    <label class="me-3"><input type="checkbox" class="form-check-input val" value="peritendinous effusion (target sign)"> Target sign/peritendinous effusion</label>
                     <label class="me-3"><input type="checkbox" class="form-check-input val" value="hypervascularity"> Hypervascularity</label>
                     <div class="d-inline-block">
                         <label class="me-3"><input type="checkbox" class="form-check-input val toggle-sub" data-target="sub_bic_tear"> Tear</label>
-                        <div id="sub_bic_tear" class="sub-options">
-                            <label><input type="radio" name="bic_tear" value="partial thickness tear" checked> Partial thickness</label>
-                            <label><input type="radio" name="bic_tear" value="full thickness tear"> Full thickness</label>
+                        <div id="sub_bic_tear" class="sub-options d-inline-block">
+                            <label class="me-2"><input type="radio" name="bic_tear" value="partial thickness tear" checked> Partial</label>
+                            <label class="me-2"><input type="radio" name="bic_tear" value="full thickness tear"> Full</label>
                         </div>
                     </div>
                 </div>
@@ -97,6 +100,16 @@
                     <label class="me-3"><input type="checkbox" class="form-check-input val" value="poorly visible due to limited external rotation"> Poorly visible</label>
                     
                     <div class="d-block mt-1">
+                        <label class="me-3 fw-bold"><input type="checkbox" class="form-check-input val toggle-sub" data-target="sub_subscap_tear"> Tear</label>
+                        <div id="sub_subscap_tear" class="sub-options d-inline-block">
+                            <label class="me-2"><input type="radio" name="subscap_tear" value="partial thickness tear" checked> Partial</label>
+                            <label class="me-2"><input type="radio" name="subscap_tear" value="full thickness tear"> Full</label>
+                            <label class="me-2"><input type="radio" name="subscap_tear" value="complete tear"> Complete</label>
+                            <label class="ms-2 border-start ps-2"><input type="checkbox" class="val-sub-extra" value="Hypervascularity"> Hypervascularity</label>
+                        </div>
+                    </div>
+
+                    <div class="d-block mt-1">
                         <label class="me-3 fw-bold"><input type="checkbox" class="form-check-input val toggle-sub" data-target="sub_subscap_calc"> Calcific deposit</label>
                         <div id="sub_subscap_calc" class="sub-options d-inline-block">
                             <span class="text-muted small">Type: </span>
@@ -105,16 +118,7 @@
                             <label class="me-2"><input type="checkbox" class="val-sub" value="nodular"> Nodular</label>
                             <label class="me-2"><input type="checkbox" class="val-sub" value="cystic"> Cystic</label>
                             <label class="me-2"><input type="checkbox" class="val-sub" value="milky"> Milky</label>
-                        </div>
-                    </div>
-
-                    <div class="d-block mt-1">
-                        <label class="me-3 fw-bold"><input type="checkbox" class="form-check-input val toggle-sub" data-target="sub_subscap_tear"> Tear</label>
-                        <div id="sub_subscap_tear" class="sub-options d-inline-block">
-                            <label class="me-2"><input type="radio" name="subscap_tear" value="partial thickness tear" checked> Partial</label>
-                            <label class="me-2"><input type="radio" name="subscap_tear" value="full thickness tear"> Full</label>
-                            <label class="me-2"><input type="radio" name="subscap_tear" value="complete tear"> Complete</label>
-                            <label class="ms-2 border-start ps-2"><input type="checkbox" class="val-sub-extra" value="with hypervascularity"> +Hypervascularity</label>
+                            <label class="ms-2 border-start ps-2"><input type="checkbox" class="val-sub-extra" value="Hypervascularity"> Hypervascularity</label>
                         </div>
                     </div>
                 </div>
@@ -122,7 +126,7 @@
                 <div class="finding-row">
                     <span class="structure-label">Supraspinatus</span>
                     <label class="me-3"><input type="checkbox" class="form-check-input struct-intact" value="intact"> Intact</label>
-                    <label class="me-3"><input type="checkbox" class="form-check-input val" value="increased thickness (>8mm)"> Increased thickness</label>
+                    <label class="me-3"><input type="checkbox" class="form-check-input val" value="increased thickness (>8mm)"> Increased thickness (>8mm)</label>
                     <label class="me-3"><input type="checkbox" class="form-check-input val" value="hypoechoic and heterogenous change"> Hypoechoic/Heterogenous</label>
                     
                     <div class="d-block mt-1">
@@ -134,6 +138,7 @@
                                 <label class="me-2"><input type="checkbox" class="val-sub" value="articular side"> Articular</label>
                                 <label class="me-2"><input type="checkbox" class="val-sub" value="intrasubstance"> Intrasubstance</label>
                                 <label class="me-2"><input type="checkbox" class="val-sub" value="full-thickness"> Full-thickness</label>
+                                <label class="me-2"><input type="checkbox" class="val-sub" value="complete tear"> Complete</label>
                             </div>
                             <div class="mb-1">
                                 <span class="text-muted small">Features: </span>
@@ -160,20 +165,20 @@
                             <label class="me-2"><input type="checkbox" class="val-sub" value="nodular"> Nodular</label>
                             <label class="me-2"><input type="checkbox" class="val-sub" value="cystic"> Cystic</label>
                             <label class="me-2"><input type="checkbox" class="val-sub" value="milky"> Milky</label>
-                            <label class="ms-2 border-start ps-2"><input type="checkbox" class="val-sub-extra" value="with hypervascularity"> +Hypervascularity</label>
+                            <label class="ms-2 border-start ps-2"><input type="checkbox" class="val-sub-extra" value="Hypervascularity"> Hypervascularity</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="finding-row">
                     <span class="structure-label">Subdeltoid bursa</span>
-                    <label class="me-3"><input type="checkbox" class="form-check-input val" value="increased thickness (>2mm)"> Increased thickness</label>
+                    <label class="me-3"><input type="checkbox" class="form-check-input val" value="increased thickness (>2mm)"> Increased thickness (>2mm)</label>
                     <label class="me-3"><input type="checkbox" class="form-check-input val" value="fluid accumulation"> Fluid accumulation</label>
                     <label class="me-3"><input type="checkbox" class="form-check-input val" value="hypervascularity"> Hypervascularity</label>
                 </div>
 
                 <div class="finding-row">
-                    <span class="structure-label">Infraspinatus tendon</span>
+                    <span class="structure-label">Infraspinatus</span>
                     <label class="me-3"><input type="checkbox" class="form-check-input struct-intact" value="intact"> Intact</label>
                     <label class="me-3"><input type="checkbox" class="form-check-input val" value="hypoechoic and heterogenous change"> Hypoechoic/Heterogenous</label>
                     
@@ -182,7 +187,7 @@
                         <div id="sub_infra_tear" class="sub-options d-inline-block">
                             <label class="me-2"><input type="radio" name="infra_tear" value="partial thickness tear" checked> Partial</label>
                             <label class="me-2"><input type="radio" name="infra_tear" value="full thickness tear"> Full</label>
-                            <label class="ms-2 border-start ps-2"><input type="checkbox" class="val-sub-extra" value="with hypervascularity"> +Hypervascularity</label>
+                            <label class="ms-2 border-start ps-2"><input type="checkbox" class="val-sub-extra" value="Hypervascularity"> Hypervascularity</label>
                         </div>
                     </div>
 
@@ -194,7 +199,7 @@
                             <label class="me-2"><input type="checkbox" class="val-sub" value="nodular"> Nodular</label>
                             <label class="me-2"><input type="checkbox" class="val-sub" value="cystic"> Cystic</label>
                             <label class="me-2"><input type="checkbox" class="val-sub" value="milky"> Milky</label>
-                            <label class="ms-2 border-start ps-2"><input type="checkbox" class="val-sub-extra" value="with hypervascularity"> +Hypervascularity</label>
+                            <label class="ms-2 border-start ps-2"><input type="checkbox" class="val-sub-extra" value="Hypervascularity"> Hypervascularity</label>
                         </div>
                     </div>
                 </div>
@@ -210,7 +215,7 @@
                     <span class="structure-label">Others</span>
                     <label class="me-3"><input type="checkbox" class="form-check-input val" value="irregularity of greater tubercle of humeral head"> Irregularity of GT</label>
                     <label class="me-3"><input type="checkbox" class="form-check-input val" value="increased thickness of IGHL (>4mm)"> IGHL > 4mm</label>
-                    <label class="me-3"><input type="checkbox" class="form-check-input val" value="trivial depression of humeral head and impingement of subdeltoid bursa during the dynamic study"> Dynamic Impingement</label>
+                    <label class="me-3"><input type="checkbox" class="form-check-input val" value="trivial depression of humeral head and impingement of subdeltoid bursa during the dynamic study"> Dynamic Impingement of subdeltoid bursa</label>
                     <div class="mt-2">
                          <input type="text" class="form-control" id="sh_other_text" placeholder="Free text input...">
                     </div>
@@ -223,73 +228,64 @@
             <div class="card-body">
                 
                 <div class="mb-2">
-                    <label class="fw-bold"><input type="checkbox" class="imp-check toggle-sub" data-target="imp_sub_supra_tear"> Supraspinatus Tear</label>
-                    <div id="imp_sub_supra_tear" class="sub-options d-inline-block">
-                        <select class="form-select form-select-sm d-inline-block w-auto me-1" id="imp_supra_loc">
-                            <option value="">(Location)</option>
-                            <option value="distal">Distal</option>
-                            <option value="proximal">Proximal</option>
-                        </select>
-                        <select class="form-select form-select-sm d-inline-block w-auto me-1" id="imp_supra_type">
-                            <option value="partial thickness tear">Partial thickness</option>
-                            <option value="full thickness tear">Full thickness</option>
-                            <option value="complete tear">Complete</option>
-                        </select>
-                        <select class="form-select form-select-sm d-inline-block w-auto" id="imp_supra_side">
-                            <option value="">(Side)</option>
-                            <option value="bursal side">Bursal side</option>
-                            <option value="articular side">Articular side</option>
-                            <option value="intrasubstance">Intrasubstance</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="mb-2">
-                    <label class="fw-bold"><input type="checkbox" class="imp-check toggle-sub" data-target="imp_sub_supra_path"> Supraspinatus Pathology</label>
-                    <div id="imp_sub_supra_path" class="sub-options d-inline-block">
-                         <label class="me-2"><input type="radio" name="imp_supra_path_val" value="tendinopathy" checked> Tendinopathy</label>
-                         <label class="me-2"><input type="radio" name="imp_supra_path_val" value="calcific tendonitis"> Calcific tendonitis</label>
+                    <label class="fw-bold"><input type="checkbox" class="toggle-sub" data-target="imp_sub_bic"> Biceps brachialis long head</label>
+                    <div id="imp_sub_bic" class="imp-sub-options">
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="tenosynovitis"> Tenosynovitis</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="tendinopathy"> Tendinopathy</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="tendinosis"> Tendinosis</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="partial tear"> Partial Tear</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="complete tear"> Complete Tear</label>
                     </div>
                 </div>
 
                 <div class="mb-2">
-                    <label class="fw-bold"><input type="checkbox" class="imp-check toggle-sub" data-target="imp_sub_infra_tear"> Infraspinatus Tear</label>
-                    <div id="imp_sub_infra_tear" class="sub-options d-inline-block">
-                        <label class="me-2"><input type="radio" name="imp_infra_tear_val" value="partial thickness tear" checked> Partial</label>
-                        <label class="me-2"><input type="radio" name="imp_infra_tear_val" value="full thickness tear"> Full</label>
-                        <label class="me-2"><input type="radio" name="imp_infra_tear_val" value="complete tear"> Complete</label>
-                    </div>
-                </div>
-                <div class="mb-2">
-                    <label class="fw-bold"><input type="checkbox" class="imp-check toggle-sub" data-target="imp_sub_infra_path"> Infraspinatus Pathology</label>
-                    <div id="imp_sub_infra_path" class="sub-options d-inline-block">
-                         <label class="me-2"><input type="radio" name="imp_infra_path_val" value="tendinopathy" checked> Tendinopathy</label>
-                         <label class="me-2"><input type="radio" name="imp_infra_path_val" value="calcific tendonitis"> Calcific tendonitis</label>
-                    </div>
-                </div>
-
-                <div class="mb-2">
-                    <label class="fw-bold"><input type="checkbox" class="imp-check toggle-sub" data-target="imp_sub_subscap_tear"> Subscapularis Tear</label>
-                    <div id="imp_sub_subscap_tear" class="sub-options d-inline-block">
-                        <label class="me-2"><input type="radio" name="imp_subscap_tear_val" value="partial thickness tear" checked> Partial</label>
-                        <label class="me-2"><input type="radio" name="imp_subscap_tear_val" value="full thickness tear"> Full</label>
-                        <label class="me-2"><input type="radio" name="imp_subscap_tear_val" value="complete tear"> Complete</label>
-                    </div>
-                </div>
-                 <div class="mb-2">
-                    <label class="fw-bold"><input type="checkbox" class="imp-check toggle-sub" data-target="imp_sub_subscap_path"> Subscapularis Pathology</label>
-                    <div id="imp_sub_subscap_path" class="sub-options d-inline-block">
-                         <label class="me-2"><input type="radio" name="imp_subscap_path_val" value="tendinopathy" checked> Tendinopathy</label>
-                         <label class="me-2"><input type="radio" name="imp_subscap_path_val" value="calcific tendonitis"> Calcific tendonitis</label>
+                    <label class="fw-bold"><input type="checkbox" class="toggle-sub" data-target="imp_sub_supra"> Supraspinatus</label>
+                    <div id="imp_sub_supra" class="imp-sub-options">
+                        <div class="mb-1">
+                            <strong>Pathology: </strong>
+                            <label class="me-2"><input type="checkbox" class="imp-val" value="tendinopathy"> Tendinopathy</label>
+                            <label class="me-2"><input type="checkbox" class="imp-val" value="tendinosis"> Tendinosis</label>
+                            <label class="me-2"><input type="checkbox" class="imp-val" value="calcific tendonitis"> Calcific Tendonitis</label>
+                            <label class="me-2"><input type="checkbox" class="imp-val" value="calcific tendinosis"> Calcific Tendinosis</label>
+                        </div>
+                        <div>
+                            <strong>Tear: </strong>
+                            <label class="me-2"><input type="checkbox" class="imp-val" value="partial thickness tear"> Partial</label>
+                            <label class="me-2"><input type="checkbox" class="imp-val" value="full thickness tear"> Full</label>
+                            <label class="me-2"><input type="checkbox" class="imp-val" value="complete tear"> Complete</label>
+                            <span class="text-muted ms-2">Details: </span>
+                            <label class="me-1"><input type="checkbox" class="imp-val-detail" value="distal"> Distal</label>
+                            <label class="me-1"><input type="checkbox" class="imp-val-detail" value="proximal"> Proximal</label>
+                            <label class="me-1"><input type="checkbox" class="imp-val-detail" value="bursal side"> Bursal</label>
+                            <label class="me-1"><input type="checkbox" class="imp-val-detail" value="articular side"> Articular</label>
+                            <label class="me-1"><input type="checkbox" class="imp-val-detail" value="intrasubstance"> Intrasubstance</label>
+                        </div>
                     </div>
                 </div>
 
                 <div class="mb-2">
-                    <label class="fw-bold"><input type="checkbox" class="imp-check toggle-sub" data-target="imp_sub_bic"> Biceps brachialis long head</label>
-                    <div id="imp_sub_bic" class="sub-options d-inline-block">
-                         <label class="me-2"><input type="radio" name="imp_bic_val" value="tenosynovitis" checked> Tenosynovitis</label>
-                         <label class="me-2"><input type="radio" name="imp_bic_val" value="tendinopathy"> Tendinopathy</label>
-                         <label class="me-2"><input type="radio" name="imp_bic_val" value="partial tear"> Partial Tear</label>
-                         <label class="me-2"><input type="radio" name="imp_bic_val" value="complete tear"> Complete Tear</label>
+                    <label class="fw-bold"><input type="checkbox" class="toggle-sub" data-target="imp_sub_subscap"> Subscapularis</label>
+                    <div id="imp_sub_subscap" class="imp-sub-options">
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="tendinopathy"> Tendinopathy</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="tendinosis"> Tendinosis</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="calcific tendonitis"> Calcific Tendonitis</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="calcific tendinosis"> Calcific Tendinosis</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="partial thickness tear"> Partial Tear</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="full thickness tear"> Full Tear</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="complete tear"> Complete Tear</label>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <label class="fw-bold"><input type="checkbox" class="toggle-sub" data-target="imp_sub_infra"> Infraspinatus</label>
+                    <div id="imp_sub_infra" class="imp-sub-options">
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="tendinopathy"> Tendinopathy</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="tendinosis"> Tendinosis</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="calcific tendonitis"> Calcific Tendonitis</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="calcific tendinosis"> Calcific Tendinosis</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="partial thickness tear"> Partial Tear</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="full thickness tear"> Full Tear</label>
+                        <label class="me-2"><input type="checkbox" class="imp-val" value="complete tear"> Complete Tear</label>
                     </div>
                 </div>
 
@@ -309,18 +305,148 @@
     </div>
 
     <div id="section_elbow" class="content-section">
-        <div class="alert alert-secondary">Elbow section selected. (Logic preserved from previous request)</div>
+        <div class="card shadow-sm">
+            <div class="card-header-custom">I. Elbow Findings</div>
+            <div class="card-body p-0">
+                <div class="section-label">Lateral Elbow</div>
+                <div class="finding-row">
+                    <span class="structure-label">Common wrist extensor tendon</span>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Intact"> Intact</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Hypoechogenic"> Hypoechogenic</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Hypervascularity"> Hypervascularity</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Traction spur"> Traction spur</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Calcification"> Calcification</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Cortical irregularity"> Cortical irregularity</label>
+                    <div class="d-inline-block">
+                        <label class="me-2"><input type="checkbox" class="form-check-input val toggle-sub" data-target="elb_lat_cwet_tear"> Tear</label>
+                        <div id="elb_lat_cwet_tear" class="sub-options d-inline-block">
+                            <label class="me-1"><input type="radio" name="elb_lat_cwet" value="partial thickness tear" checked> Partial</label>
+                            <label class="me-1"><input type="radio" name="elb_lat_cwet" value="full thickness tear"> Full</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="finding-row">
+                    <span class="structure-label">Humeroradial joint</span>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Intact"> Intact</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Effusion"> Effusion</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Synovial hypertrophy"> Synovial hypertrophy</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Cortical irregularity of radial head"> Cortical irregularity</label>
+                </div>
+                <div class="finding-row">
+                    <span class="structure-label">Radial collateral ligament</span>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Intact"> Intact</label>
+                    <div class="d-inline-block">
+                        <label class="me-2"><input type="checkbox" class="form-check-input val toggle-sub" data-target="elb_lat_rcl_tear"> Tear</label>
+                        <div id="elb_lat_rcl_tear" class="sub-options d-inline-block">
+                            <label class="me-1"><input type="radio" name="elb_lat_rcl" value="partial thickness tear" checked> Partial</label>
+                            <label class="me-1"><input type="radio" name="elb_lat_rcl" value="full thickness tear"> Full</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-label">Anterior Elbow</div>
+                <div class="finding-row">
+                    <span class="structure-label">Anterior joint recess</span>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Intact"> Intact</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Effusion"> Effusion</label>
+                </div>
+                <div class="finding-row">
+                    <span class="structure-label">Distal biceps tendon</span>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Intact"> Intact</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Hypoechogenicity"> Hypoechogenicity</label>
+                    <div class="d-inline-block">
+                        <label class="me-2"><input type="checkbox" class="form-check-input val toggle-sub" data-target="elb_ant_bic_tear"> Tear</label>
+                        <div id="elb_ant_bic_tear" class="sub-options d-inline-block">
+                            <label class="me-1"><input type="radio" name="elb_ant_bic" value="partial thickness tear" checked> Partial</label>
+                            <label class="me-1"><input type="radio" name="elb_ant_bic" value="full thickness tear"> Full</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="finding-row">
+                    <span class="structure-label">Nerves</span>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Median nerve Intact"> Median Intact</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val toggle-input" data-target="elb_med_entrap"> Median Entrapment at:</label>
+                    <input type="text" id="elb_med_entrap" class="form-control d-inline-block w-auto py-0" disabled placeholder="loc">
+                    
+                    <label class="me-2 ms-3"><input type="checkbox" class="form-check-input val" value="Radial nerve Intact"> Radial Intact</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val toggle-input" data-target="elb_rad_entrap"> Radial Entrapment at:</label>
+                    <input type="text" id="elb_rad_entrap" class="form-control d-inline-block w-auto py-0" disabled placeholder="loc">
+                </div>
+
+                <div class="section-label">Medial Elbow</div>
+                <div class="finding-row">
+                    <span class="structure-label">Common wrist flexor tendon</span>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Intact"> Intact</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Hypoechogenic"> Hypoechogenic</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Hypervascularity"> Hypervascularity</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Calcification"> Calcification</label>
+                    <div class="d-inline-block">
+                        <label class="me-2"><input type="checkbox" class="form-check-input val toggle-sub" data-target="elb_med_cwft_tear"> Tear</label>
+                        <div id="elb_med_cwft_tear" class="sub-options d-inline-block">
+                            <label class="me-1"><input type="radio" name="elb_med_cwft" value="partial thickness tear" checked> Partial</label>
+                            <label class="me-1"><input type="radio" name="elb_med_cwft" value="full thickness tear"> Full</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="finding-row">
+                    <span class="structure-label">Ulnar collateral ligament</span>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Intact"> Intact</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Thickened"> Thickened</label>
+                    <div class="d-inline-block">
+                        <label class="me-2"><input type="checkbox" class="form-check-input val toggle-sub" data-target="elb_med_ucl_tear"> Tear</label>
+                        <div id="elb_med_ucl_tear" class="sub-options d-inline-block">
+                            <label class="me-1"><input type="radio" name="elb_med_ucl" value="partial thickness tear" checked> Partial</label>
+                            <label class="me-1"><input type="radio" name="elb_med_ucl" value="full thickness tear"> Full</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-label">Posterior Elbow</div>
+                <div class="finding-row">
+                    <span class="structure-label">Triceps tendon</span>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Intact"> Intact</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Hypoechogenic"> Hypoechogenic</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Calcification"> Calcification</label>
+                    <div class="d-inline-block">
+                        <label class="me-2"><input type="checkbox" class="form-check-input val toggle-sub" data-target="elb_post_tri_tear"> Tear</label>
+                        <div id="elb_post_tri_tear" class="sub-options d-inline-block">
+                            <label class="me-1"><input type="radio" name="elb_post_tri" value="partial thickness tear" checked> Partial</label>
+                            <label class="me-1"><input type="radio" name="elb_post_tri" value="full thickness tear"> Full</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="finding-row">
+                    <span class="structure-label">Olecranon bursa</span>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Invisible"> Invisible</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Effusion"> Effusion</label>
+                </div>
+                <div class="finding-row">
+                    <span class="structure-label">Ulnar nerve</span>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Intact"> Intact</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Hypoechogenic"> Hypoechogenic</label>
+                    <label class="me-2"><input type="checkbox" class="form-check-input val" value="Subluxation under dynamic study"> Subluxation</label>
+                    <div class="d-inline-block bg-light p-1 border rounded">
+                        <label class="me-1 small fw-bold"><input type="checkbox" class="form-check-input val toggle-input" data-target="elb_csa_grp"> CSA:</label>
+                        <span id="elb_csa_grp" style="opacity: 0.5;">
+                            R:<input type="number" id="csa_r" class="form-control d-inline-block w-auto py-0 px-1" disabled style="width:50px!important"> 
+                            L:<input type="number" id="csa_l" class="form-control d-inline-block w-auto py-0 px-1" disabled style="width:50px!important"> mm²
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
-    <div id="section_wrist" class="content-section"><div class="alert alert-secondary">Wrist section selected.</div></div>
-    <div id="section_knee" class="content-section"><div class="alert alert-secondary">Knee section selected.</div></div>
-    <div id="section_ankle" class="content-section"><div class="alert alert-secondary">Ankle section selected.</div></div>
-    <div id="section_mass" class="content-section"><div class="alert alert-secondary">Mass section selected.</div></div>
+    </div>
+
+    <div id="section_wrist" class="content-section"><div class="alert alert-secondary">Wrist section placeholder.</div></div>
+    <div id="section_knee" class="content-section"><div class="alert alert-secondary">Knee section placeholder.</div></div>
+    <div id="section_ankle" class="content-section"><div class="alert alert-secondary">Ankle section placeholder.</div></div>
+    <div id="section_mass" class="content-section"><div class="alert alert-secondary">Mass section placeholder.</div></div>
 
 
-    <button class="btn btn-generate mt-4" onclick="generateReport()">Generate Report</button>
+    <button class="btn btn-primary w-100 py-3 mt-4 fw-bold fs-5" onclick="generateReport()">Generate Report</button>
     
     <div class="mt-4">
-        <h5>Final Report:</h5>
+        <h5>Report Preview:</h5>
         <div id="output" class="report-box shadow-sm"></div>
     </div>
 </div>
@@ -328,87 +454,124 @@
 <script>
     // --- UI Logic ---
     function switchPart(partId) {
-        // Toggle buttons
         document.querySelectorAll('.part-btn').forEach(btn => btn.classList.remove('active'));
         event.target.classList.add('active');
-        
-        // Toggle Sections
         document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
         document.getElementById('section_' + partId).classList.add('active');
     }
 
-    // Toggle Sub-options
     document.querySelectorAll('.toggle-sub').forEach(cb => {
         cb.addEventListener('change', function() {
             const target = document.getElementById(this.dataset.target);
-            target.style.display = this.checked ? 'inline-block' : 'none';
+            if(target) target.style.display = this.checked ? 'inline-block' : 'none';
         });
     });
 
-    // --- Generator Logic ---
+    document.querySelectorAll('.toggle-input').forEach(cb => {
+        cb.addEventListener('change', function() {
+            const target = document.getElementById(this.dataset.target);
+            if(target) {
+                if(this.dataset.target.includes('grp')) {
+                    target.style.opacity = this.checked ? '1' : '0.5';
+                    target.querySelectorAll('input').forEach(i => i.disabled = !this.checked);
+                } else {
+                    target.disabled = !this.checked;
+                    if(!this.checked) target.value = '';
+                }
+            }
+        });
+    });
+
+    // Auto-uncheck Logic for "Intact"
+    document.querySelectorAll('.struct-intact').forEach(intact => {
+        intact.addEventListener('change', function() {
+            if(this.checked) {
+                // Uncheck all other inputs in the same row
+                let row = this.closest('.finding-row');
+                row.querySelectorAll('input[type="checkbox"]:not(.struct-intact)').forEach(cb => {
+                    cb.checked = false;
+                    cb.dispatchEvent(new Event('change')); // Trigger toggle logic
+                });
+            }
+        });
+    });
+    
+    // Reverse Logic: If abnormal checked, uncheck Intact
+    document.querySelectorAll('.finding-row input[type="checkbox"]:not(.struct-intact)').forEach(abnormal => {
+        abnormal.addEventListener('change', function() {
+            if(this.checked) {
+                let row = this.closest('.finding-row');
+                let intact = row.querySelector('.struct-intact');
+                if(intact) intact.checked = false;
+            }
+        });
+    });
+
+    // --- Generation Logic ---
     function generateReport() {
         const side = document.querySelector('input[name="side"]:checked').value;
         const activePart = document.querySelector('.content-section.active').id;
         
-        let report = "";
-
         if (activePart === 'section_shoulder') {
-            report += generateShoulderFindings(side);
-            report += "\n" + generateShoulderImpression(side);
+            let findings = generateShoulderFindings();
+            let impression = generateShoulderImpression(side);
+            document.getElementById('output').innerText = findings + "\n" + impression;
+        } else if (activePart === 'section_elbow') {
+            document.getElementById('output').innerText = generateElbowFindings(side);
         } else {
-            report += `[${activePart.replace('section_', '').toUpperCase()}] Report generation placeholder.`;
+            document.getElementById('output').innerText = `[${activePart}] Report under construction.`;
         }
-
-        document.getElementById('output').innerText = report;
     }
 
-    function generateShoulderFindings(side) {
+    function generateShoulderFindings() {
         let text = "";
         const container = document.getElementById('section_shoulder');
         
-        // --- 1. Smart "All Intact" Check ---
+        // Smart "All Intact" Check
         const intactIds = container.querySelectorAll('.struct-intact:checked');
         const anyPathology = container.querySelectorAll('.val:checked').length > 0;
-        const totalStructs = 6; // Biceps, AC, Subscap, Supra, Infra, Labrum
-        
-        // Logic: All 6 "Intact" boxes checked AND No other findings checked
-        if (intactIds.length === totalStructs && !anyPathology) {
-             return `Findings:\nintact biceps LH tendon, AC joint, subscapularis, supraspinatus tendon, infraspinatus tendon and posterior labrum\n`;
+        // Biceps, AC, Subscap, Supra, Infra, Labrum = 6
+        if (intactIds.length === 6 && !anyPathology) {
+             return `Findings:\nintact biceps LH tendon, AC joint, subscapularis, supraspinatus tendon, infraspinatus and posterior labrum\n`;
         }
 
-        // --- 2. Individual Findings Generation ---
         let findingsList = [];
 
         container.querySelectorAll('.finding-row').forEach(row => {
             const label = row.querySelector('.structure-label').innerText;
             let rowVals = [];
 
-            // Intact Checkbox
             if (row.querySelector('.struct-intact') && row.querySelector('.struct-intact').checked) {
                 rowVals.push("intact");
             }
 
-            // Normal Values
             row.querySelectorAll('.val:checked').forEach(cb => {
-                if(cb.classList.contains('toggle-sub')) return; // Skip toggle parents
+                if(cb.classList.contains('toggle-sub') || cb.classList.contains('toggle-input')) return;
                 rowVals.push(cb.value);
             });
 
             // Specific Sub-Logics
-            
-            // Subscapularis Calcific
-            if (row.querySelector('[data-target="sub_subscap_calc"]:checked')) {
-                let types = Array.from(document.querySelectorAll('#sub_subscap_calc .val-sub:checked')).map(c => c.value);
-                let desc = "calcific deposit along the subscapularis tendon fibers with partial shadowing";
-                if(types.length > 0) desc += ` (${types.join(', ')})`;
-                rowVals.push(desc);
+            // Biceps Tear
+            if (row.querySelector('[data-target="sub_bic_tear"]:checked')) {
+                let tearType = document.querySelector('input[name="bic_tear"]:checked').value;
+                rowVals.push("tear (" + tearType + ")");
             }
+
             // Subscapularis Tear
             if (row.querySelector('[data-target="sub_subscap_tear"]:checked')) {
                 let tearType = document.querySelector('input[name="subscap_tear"]:checked').value;
                 let extra = document.querySelector('#sub_subscap_tear .val-sub-extra:checked');
-                if(extra) tearType += " with hypervascularity";
+                if(extra) tearType += ", Hypervascularity";
                 rowVals.push("tear (" + tearType + ")");
+            }
+            // Subscapularis Calcific
+            if (row.querySelector('[data-target="sub_subscap_calc"]:checked')) {
+                let types = Array.from(document.querySelectorAll('#sub_subscap_calc .val-sub:checked')).map(c => c.value);
+                let extra = document.querySelector('#sub_subscap_calc .val-sub-extra:checked');
+                let desc = "calcific deposit along the subscapularis tendon fibers with partial shadowing";
+                if(types.length > 0) desc += ` (${types.join(', ')})`;
+                if(extra) desc += " with Hypervascularity";
+                rowVals.push(desc);
             }
 
             // Supraspinatus Tear
@@ -430,7 +593,7 @@
                 let extra = document.querySelector('#sub_supra_calc .val-sub-extra:checked');
                 let desc = "calcific deposit along the supraspinatus tendon fibers with partial shadowing";
                 if(types.length > 0) desc += ` (${types.join(', ')})`;
-                if(extra) desc += " with hypervascularity";
+                if(extra) desc += " with Hypervascularity";
                 rowVals.push(desc);
             }
 
@@ -438,7 +601,7 @@
             if (row.querySelector('[data-target="sub_infra_tear"]:checked')) {
                 let tearType = document.querySelector('input[name="infra_tear"]:checked').value;
                 let extra = document.querySelector('#sub_infra_tear .val-sub-extra:checked');
-                if(extra) tearType += ", with hypervascularity";
+                if(extra) tearType += ", Hypervascularity";
                 rowVals.push("tear (" + tearType + ")");
             }
             // Infraspinatus Calcific
@@ -447,14 +610,8 @@
                 let extra = document.querySelector('#sub_infra_calc .val-sub-extra:checked');
                 let desc = "calcific deposit along the infraspinatus tendon fibers with partial shadowing";
                 if(types.length > 0) desc += ` (${types.join(', ')})`;
-                if(extra) desc += " with hypervascularity";
+                if(extra) desc += " with Hypervascularity";
                 rowVals.push(desc);
-            }
-
-            // Biceps Tear
-            if (row.querySelector('[data-target="sub_bic_tear"]:checked')) {
-                let tearType = document.querySelector('input[name="bic_tear"]:checked').value;
-                rowVals.push("tear (" + tearType + ")");
             }
 
             // Others text
@@ -477,52 +634,36 @@
     function generateShoulderImpression(side) {
         let imps = [];
         
-        // Supraspinatus Tear
-        if (document.querySelector('[data-target="imp_sub_supra_tear"]:checked')) {
-            let loc = document.getElementById('imp_supra_loc').value;
-            let type = document.getElementById('imp_supra_type').value;
-            let subSide = document.getElementById('imp_supra_side').value;
-            let str = `${side} Supraspinatus ${type}`;
-            if(loc) str += ` (${loc})`;
-            if(subSide) str += ` (${subSide})`;
-            imps.push(str);
-        }
-        // Supraspinatus Path
-        if (document.querySelector('[data-target="imp_sub_supra_path"]:checked')) {
-            let val = document.querySelector('input[name="imp_supra_path_val"]:checked').value;
-            imps.push(`${side} Supraspinatus ${val}`);
-        }
-        // Infraspinatus Tear
-        if (document.querySelector('[data-target="imp_sub_infra_tear"]:checked')) {
-            let val = document.querySelector('input[name="imp_infra_tear_val"]:checked').value;
-            imps.push(`${side} Infraspinatus ${val}`);
-        }
-        // Infraspinatus Path
-        if (document.querySelector('[data-target="imp_sub_infra_path"]:checked')) {
-            let val = document.querySelector('input[name="imp_infra_path_val"]:checked').value;
-            imps.push(`${side} Infraspinatus ${val}`);
-        }
-        // Subscapularis Tear
-        if (document.querySelector('[data-target="imp_sub_subscap_tear"]:checked')) {
-            let val = document.querySelector('input[name="imp_subscap_tear_val"]:checked').value;
-            imps.push(`${side} Subscapularis ${val}`);
-        }
-        // Subscapularis Path
-        if (document.querySelector('[data-target="imp_sub_subscap_path"]:checked')) {
-            let val = document.querySelector('input[name="imp_subscap_path_val"]:checked').value;
-            imps.push(`${side} Subscapularis ${val}`);
-        }
         // Biceps
         if (document.querySelector('[data-target="imp_sub_bic"]:checked')) {
-            let val = document.querySelector('input[name="imp_bic_val"]:checked').value;
-            imps.push(`${side} Biceps brachialis long head ${val}`);
+            let details = Array.from(document.querySelectorAll('#imp_sub_bic .imp-val:checked')).map(c => c.value);
+            if(details.length > 0) imps.push(`${side} Biceps brachialis long head: ${details.join(', ')}`);
+        }
+
+        // Supraspinatus
+        if (document.querySelector('[data-target="imp_sub_supra"]:checked')) {
+            let vals = Array.from(document.querySelectorAll('#imp_sub_supra .imp-val:checked')).map(c => c.value);
+            let details = Array.from(document.querySelectorAll('#imp_sub_supra .imp-val-detail:checked')).map(c => c.value);
+            let str = `${side} Supraspinatus: ${vals.join(', ')}`;
+            if(details.length > 0) str += ` (${details.join(', ')})`;
+            if(vals.length > 0) imps.push(str);
+        }
+
+        // Subscapularis
+        if (document.querySelector('[data-target="imp_sub_subscap"]:checked')) {
+            let vals = Array.from(document.querySelectorAll('#imp_sub_subscap .imp-val:checked')).map(c => c.value);
+            if(vals.length > 0) imps.push(`${side} Subscapularis: ${vals.join(', ')}`);
+        }
+
+        // Infraspinatus
+        if (document.querySelector('[data-target="imp_sub_infra"]:checked')) {
+            let vals = Array.from(document.querySelectorAll('#imp_sub_infra .imp-val:checked')).map(c => c.value);
+            if(vals.length > 0) imps.push(`${side} Infraspinatus: ${vals.join(', ')}`);
         }
 
         // Standard checkboxes
         document.querySelectorAll('.imp-check:checked').forEach(cb => {
-            if(!cb.classList.contains('toggle-sub')) {
-                imps.push(`${side} ${cb.value}`);
-            }
+            imps.push(`${side} ${cb.value}`);
         });
 
         // Other Text
@@ -533,6 +674,45 @@
 
         let text = `Impression:\nThis ultrasonography study of ${side} shoulder showed:\n`;
         imps.forEach(imp => text += `* ${imp}\n`);
+        text += "Please correlate with clinical presentation.";
+        return text;
+    }
+
+    function generateElbowFindings(side) {
+        let text = `This ultrasonography study of ${side} elbow showed:\nFindings:\n`;
+        const container = document.getElementById('section_elbow');
+        
+        container.querySelectorAll('.finding-row').forEach(row => {
+            const label = row.querySelector('.structure-label').innerText;
+            let rowVals = [];
+
+            row.querySelectorAll('.val:checked').forEach(cb => {
+                if(cb.classList.contains('toggle-sub') || cb.classList.contains('toggle-input')) return;
+                rowVals.push(cb.value);
+            });
+
+            // Radio Buttons
+            if (row.querySelector('.toggle-sub:checked') && row.querySelector('input[type="radio"]')) {
+                rowVals.push("tear (" + row.querySelector('input[type="radio"]:checked').value + ")");
+            }
+
+            // Entrapment
+            if (row.querySelector('.toggle-input:checked') && row.querySelector('input[type="text"]')) {
+                rowVals.push(`Entrapment at ${row.querySelector('input[type="text"]').value || '?'}`);
+            }
+
+            // CSA
+            if (row.querySelector('.toggle-input:checked') && row.querySelector('#csa_r')) {
+                let r = document.getElementById('csa_r').value || '-';
+                let l = document.getElementById('csa_l').value || '-';
+                rowVals.push(`CSA at cubital tunnel (R: ${r}, L: ${l} mm²)`);
+            }
+
+            if(rowVals.length > 0) {
+                text += `- ${label}: ${rowVals.join(', ')}\n`;
+            }
+        });
+        
         text += "Please correlate with clinical presentation.";
         return text;
     }
