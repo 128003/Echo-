@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MSK Ultrasound Report - Elbow</title>
+    <title>Advanced Elbow Echo Report</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f4f7f6; padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .card { margin-bottom: 15px; border-radius: 10px; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .section-header { background-color: #0d6efd; color: white; padding: 10px 15px; border-radius: 10px 10px 0 0; font-weight: bold; }
-        .structure-group { padding: 15px; border-bottom: 1px solid #eee; }
-        .structure-name { font-weight: 600; color: #333; margin-bottom: 8px; display: block; }
+        body { background-color: #f0f2f5; padding: 20px; font-family: 'Segoe UI', Arial, sans-serif; }
+        .card { margin-bottom: 20px; border-radius: 12px; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .section-header { background-color: #0d6efd; color: white; padding: 12px 20px; border-radius: 12px 12px 0 0; font-weight: bold; }
+        .structure-group { padding: 15px 20px; border-bottom: 1px solid #edf0f2; }
+        .structure-name { font-weight: 600; color: #2c3e50; margin-bottom: 8px; display: block; }
         .option-group { display: flex; flex-wrap: wrap; gap: 10px; }
-        .form-check { margin-right: 5px; }
-        .sub-options { margin-left: 25px; padding: 5px; border-left: 2px solid #dee2e6; margin-top: 5px; display: none; }
-        .report-output { background: #fff; border: 2px solid #0d6efd; padding: 20px; white-space: pre-wrap; font-family: 'Consolas', monospace; min-height: 200px; }
-        .btn-generate { background-color: #198754; color: white; font-weight: bold; padding: 12px; }
+        .sub-options { margin-left: 25px; padding: 10px; border-left: 3px solid #0d6efd; background: #f8f9fa; margin-top: 8px; border-radius: 0 5px 5px 0; display: none; }
+        .report-output { background: #fff; border: 2px solid #0d6efd; padding: 25px; white-space: pre-wrap; font-family: 'Consolas', 'Monaco', monospace; line-height: 1.6; }
+        .impression-item { padding: 5px 10px; border-radius: 5px; transition: background 0.3s; }
+        .suggested { background-color: #fff3cd; border: 1px dashed #ffc107; } /* 建議診斷的高亮樣式 */
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2 class="text-center mb-4">肘關節超音波檢查報告 (複選模式)</h2>
+    <h2 class="text-center mb-4">復健科超音波檢查報告系統</h2>
 
-    <div class="card p-3">
+    <div class="card p-3 shadow-sm">
         <div class="d-flex align-items-center">
-            <span class="me-3 fw-bold">1. Exam Side:</span>
+            <span class="me-4 fw-bold">Select Side:</span>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="side" id="sideR" value="Right" checked>
-                <label class="form-check-label" for="sideR">Right</label>
+                <input class="form-check-input" type="radio" name="side" id="sideR" value="right" checked>
+                <label class="form-check-label" for="sideR">Right Elbow</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="side" id="sideL" value="Left">
-                <label class="form-check-label" for="sideL">Left</label>
+                <input class="form-check-input" type="radio" name="side" id="sideL" value="left">
+                <label class="form-check-label" for="sideL">Left Elbow</label>
             </div>
         </div>
     </div>
@@ -42,13 +42,12 @@
         <div class="structure-group" id="group_cwt">
             <span class="structure-name">Common wrist extensor tendon:</span>
             <div class="option-group">
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Intact"> Intact</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypoechogenic"> Hypoechogenic</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypervascularity"> Hypervascularity</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input tear-trigger" value="Tear" data-target="sub_cwt"> Tear</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Traction spur"> Traction spur</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Calcification"> Calcification</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Cortical irregularity"> Cortical irregularity</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Intact"> Intact</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Hypoechogenic" data-suggest="imp_tennis,imp_cwt_path"> Hypoechogenic</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Hypervascularity" data-suggest="imp_tennis"> Hypervascularity</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding tear-trigger" value="Tear" data-target="sub_cwt" data-suggest="imp_cwt_tear"> Tear</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Traction spur"> Traction spur</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Calcification"> Calcification</label>
             </div>
             <div class="sub-options" id="sub_cwt">
                 <label class="form-check-inline me-3"><input type="radio" name="cwt_tear" value="Partial thickness"> Partial</label>
@@ -58,18 +57,17 @@
         <div class="structure-group" id="group_hrj">
             <span class="structure-name">Humeroradial joint:</span>
             <div class="option-group">
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Intact"> Intact</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Effusion"> Effusion</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypervascularity"> Hypervascularity</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Synovial hypertrophy"> Synovial hypertrophy</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Cortical irregularity of radial head"> Cortical irregularity of radial head</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Intact"> Intact</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Effusion" data-suggest="imp_hr_arthritis"> Effusion</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Synovial hypertrophy" data-suggest="imp_hr_arthritis"> Synovial hypertrophy</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Cortical irregularity of radial head"> Cortical irregularity of radial head</label>
             </div>
         </div>
         <div class="structure-group" id="group_rcl">
             <span class="structure-name">Radial collateral ligament (RCL):</span>
             <div class="option-group">
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Intact"> Intact</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input tear-trigger" value="Tear" data-target="sub_rcl"> Tear</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Intact"> Intact</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding tear-trigger" value="Tear" data-target="sub_rcl" data-suggest="imp_rcl_sprain"> Tear</label>
             </div>
             <div class="sub-options" id="sub_rcl">
                 <label class="form-check-inline me-3"><input type="radio" name="rcl_tear" value="Partial thickness"> Partial</label>
@@ -83,39 +81,16 @@
         <div class="structure-group" id="group_ajr">
             <span class="structure-name">Anterior joint recess:</span>
             <div class="option-group">
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Intact"> Intact</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Effusion"> Effusion</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypervascularity"> Hypervascularity</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Synovial hypertrophy"> Synovial hypertrophy</label>
-            </div>
-        </div>
-        <div class="structure-group" id="group_biceps">
-            <span class="structure-name">Distal biceps tendon:</span>
-            <div class="option-group">
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Intact"> Intact</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypoechogenicity"> Hypoechogenicity</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypervascularity"> Hypervascularity</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input tear-trigger" value="Tear" data-target="sub_biceps"> Tear</label>
-            </div>
-            <div class="sub-options" id="sub_biceps">
-                <label class="form-check-inline me-3"><input type="radio" name="biceps_tear" value="Partial thickness"> Partial</label>
-                <label class="form-check-inline"><input type="radio" name="biceps_tear" value="Full thickness"> Full thickness</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Intact"> Intact</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Effusion"> Effusion</label>
             </div>
         </div>
         <div class="structure-group" id="group_median">
             <span class="structure-name">Median nerve:</span>
             <div class="option-group">
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Intact"> Intact</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input input-trigger" value="Entrapment" data-target="loc_median"> Entrapment at:</label>
-                <input type="text" class="form-control form-control-sm w-50 d-none" id="loc_median" placeholder="e.g., Pronator teres">
-            </div>
-        </div>
-        <div class="structure-group" id="group_radial">
-            <span class="structure-name">Radial nerve:</span>
-            <div class="option-group">
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Intact"> Intact</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input input-trigger" value="Entrapment" data-target="loc_radial"> Entrapment at:</label>
-                <input type="text" class="form-control form-control-sm w-50 d-none" id="loc_radial" placeholder="e.g., Arcade of Frohse">
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Intact"> Intact</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding input-trigger" value="Entrapment" data-target="loc_median"> Entrapment at:</label>
+                <input type="text" class="form-control form-control-sm w-50 d-none" id="loc_median">
             </div>
         </div>
     </div>
@@ -125,188 +100,148 @@
         <div class="structure-group" id="group_cft">
             <span class="structure-name">Common wrist flexor tendon:</span>
             <div class="option-group">
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Intact"> Intact</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypoechogenic"> Hypoechogenic</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypervascularity"> Hypervascularity</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input tear-trigger" value="Tear" data-target="sub_cft"> Tear</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Traction spur"> Traction spur</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Calcification"> Calcification</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Cortical irregularity"> Cortical irregularity</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Intact"> Intact</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Hypoechogenic" data-suggest="imp_cft_path"> Hypoechogenic</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding tear-trigger" value="Tear" data-target="sub_cft"> Tear</label>
             </div>
             <div class="sub-options" id="sub_cft">
-                <label class="form-check-inline me-3"><input type="radio" name="cft_tear" value="Partial thickness"> Partial</label>
-                <label class="form-check-inline"><input type="radio" name="cft_tear" value="Full thickness"> Full thickness</label>
+                <label class="form-check-inline"><input type="radio" name="cft_tear" value="Partial thickness"> Partial</label>
+            </div>
+        </div>
+        <div class="structure-group" id="group_huj">
+            <span class="structure-name">Humeroulnar joint:</span>
+            <div class="option-group">
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Intact"> Intact</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Effusion"> Effusion</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Hypervascularity"> Hypervascularity</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Synovial hypertrophy"> Synovial hypertrophy</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Cortical irregularity of radial head"> Cortical irregularity of radial head</label>
             </div>
         </div>
         <div class="structure-group" id="group_ucl">
             <span class="structure-name">Ulnar collateral ligament (UCL):</span>
             <div class="option-group">
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Intact"> Intact</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypoechogenecity"> Hypoechogenecity</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypervascularity"> Hypervascularity</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input tear-trigger" value="Tear" data-target="sub_ucl"> Tear</label>
-            </div>
-            <div class="sub-options" id="sub_ucl">
-                <label class="form-check-inline me-3"><input type="radio" name="ucl_tear" value="Partial thickness"> Partial</label>
-                <label class="form-check-inline"><input type="radio" name="ucl_tear" value="Full thickness"> Full thickness</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Intact"> Intact</label>
+                <label class="form-check"><input type="checkbox" class="form-check-input finding tear-trigger" value="Tear" data-target="sub_ucl" data-suggest="imp_ucl_sprain"> Tear</label>
             </div>
         </div>
     </div>
 
     <div class="card">
         <div class="section-header">第四部分：Posterior Elbow</div>
-        <div class="structure-group" id="group_pf">
-            <span class="structure-name">Posterior fossa:</span>
-            <div class="option-group">
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Intact"> Intact</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Effusion"> Effusion</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypervascularity"> Hypervascularity</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Synovial hypertrophy"> Synovial hypertrophy</label>
-            </div>
-        </div>
-        <div class="structure-group" id="group_bursa">
-            <span class="structure-name">Olecranon bursa:</span>
-            <div class="option-group">
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Invisible"> Invisible</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Effusion"> Effusion</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypervascularity"> Hypervascularity</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Synovial hypertrophy"> Synovial hypertrophy</label>
-            </div>
-        </div>
-        <div class="structure-group" id="group_triceps">
-            <span class="structure-name">Triceps tendon:</span>
-            <div class="option-group">
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Intact"> Intact</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypoechogenic"> Hypoechogenic</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypervascularity"> Hypervascularity</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input tear-trigger" value="Tear" data-target="sub_triceps"> Tear</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Traction spur"> Traction spur</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Calcification"> Calcification</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Cortical irregularity"> Cortical irregularity</label>
-            </div>
-            <div class="sub-options" id="sub_triceps">
-                <label class="form-check-inline me-3"><input type="radio" name="triceps_tear" value="Partial thickness"> Partial</label>
-                <label class="form-check-inline"><input type="radio" name="triceps_tear" value="Full thickness"> Full thickness</label>
-            </div>
-        </div>
         <div class="structure-group" id="group_ulnar">
             <span class="structure-name">Ulnar nerve:</span>
-            <div class="option-group mb-2">
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Intact"> Intact</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" id="chk_un_csa" value="CSA measured"> CSA at cubital tunnel</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Hypoechoic"> Hypoechoic</label>
-                <label class="form-check"><input type="checkbox" class="form-check-input" value="Subluxation under dynamic study"> Subluxation under dynamic study</label>
-            </div>
-            <div class="row g-2 d-none" id="un_csa_inputs">
-                <div class="col-auto">Right: <input type="number" step="0.1" class="form-control form-control-sm d-inline-block" id="un_r" style="width:80px"> mm²</div>
-                <div class="col-auto">Left: <input type="number" step="0.1" class="form-control form-control-sm d-inline-block" id="un_l" style="width:80px"> mm²</div>
+            <div class="option-group">
+                <label class="form-check"><input type="checkbox" class="form-check-input finding" value="Subluxation under dynamic study" data-suggest="imp_un_dislocation"> Subluxation under dynamic study</label>
             </div>
         </div>
     </div>
 
-    <button class="btn btn-generate w-100 mb-4 shadow" onclick="generateReport()">Generate Text Report</button>
+    <div class="card">
+        <div class="section-header" style="background-color: #198754;">第伍部分：Impression (Diagnoses)</div>
+        <div class="p-3">
+            <div class="row">
+                <div class="col-md-6 impression-item" id="imp_tennis"><label class="form-check"><input type="checkbox" class="form-check-input imp-check" value="lateral epicondylosis with common wrist extensor tendinitis/tendinosis, compatible with tennis elbow."> Tennis Elbow</label></div>
+                <div class="col-md-6 impression-item" id="imp_hr_arthritis"><label class="form-check"><input type="checkbox" class="form-check-input imp-check" value="humeroradial arthritis."> Humeroradial Arthritis</label></div>
+                <div class="col-md-6 impression-item" id="imp_rcl_sprain"><label class="form-check"><input type="checkbox" class="form-check-input imp-check" value="elbow radial collateral ligament sprain."> RCL Sprain</label></div>
+                <div class="col-md-6 impression-item" id="imp_ucl_sprain"><label class="form-check"><input type="checkbox" class="form-check-input imp-check" value="elbow ulnar collateral ligament sprain."> UCL Sprain</label></div>
+                <div class="col-md-6 impression-item" id="imp_cwt_path"><label class="form-check"><input type="checkbox" class="form-check-input imp-check" value="common wrist extensor tendinopathy."> CWT Tendinopathy</label></div>
+                <div class="col-md-6 impression-item" id="imp_cwt_tear"><label class="form-check"><input type="checkbox" class="form-check-input imp-check" value="common wrist extensor tendon partial tear."> CWT Partial Tear</label></div>
+                <div class="col-md-6 impression-item" id="imp_un_dislocation"><label class="form-check"><input type="checkbox" class="form-check-input imp-check" value="Ulnar nerve dynamic dislocation at cubital tunnel."> Ulnar Nerve Dislocation</label></div>
+                <div class="col-md-6 impression-item" id="imp_cft_path"><label class="form-check"><input type="checkbox" class="form-check-input imp-check" value="common wrist flexor tendinopathy."> CFT Tendinopathy</label></div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-success btn-lg w-100 mb-4 shadow" onclick="generateReport()">Generate Final Report</button>
 
     <div class="mb-5">
-        <h5>Report Output (Only Checked Items):</h5>
+        <h5>Final Echography Report:</h5>
         <div id="output" class="report-output shadow-sm"></div>
         <button class="btn btn-primary mt-2" onclick="copyToClipboard()">Copy to Clipboard</button>
     </div>
 </div>
 
+
+
 <script>
-// Toggle sub-options for Tears
+// Smart Suggestion Logic
+document.querySelectorAll('.finding').forEach(chk => {
+    chk.addEventListener('change', function() {
+        const suggestions = this.dataset.suggest ? this.dataset.suggest.split(',') : [];
+        suggestions.forEach(impId => {
+            const impBox = document.getElementById(impId);
+            if (this.checked) {
+                impBox.classList.add('suggested');
+                // 可選：自動勾選建議項目
+                // impBox.querySelector('input').checked = true;
+            } else {
+                impBox.classList.remove('suggested');
+            }
+        });
+    });
+});
+
+// UI Toggles
 document.querySelectorAll('.tear-trigger').forEach(chk => {
     chk.addEventListener('change', function() {
-        const target = document.getElementById(this.dataset.target);
-        target.style.display = this.checked ? 'block' : 'none';
+        document.getElementById(this.dataset.target).style.display = this.checked ? 'block' : 'none';
     });
 });
-
-// Toggle inputs for Nerve Locations
 document.querySelectorAll('.input-trigger').forEach(chk => {
     chk.addEventListener('change', function() {
-        const target = document.getElementById(this.dataset.target);
-        target.classList.toggle('d-none', !this.checked);
+        document.getElementById(this.dataset.target).classList.toggle('d-none', !this.checked);
     });
-});
-
-// Toggle Ulnar CSA inputs
-document.getElementById('chk_un_csa').addEventListener('change', function() {
-    document.getElementById('un_csa_inputs').classList.toggle('d-none', !this.checked);
 });
 
 function generateReport() {
     const side = document.querySelector('input[name="side"]:checked').value;
-    let report = `REHABILITATION ECHOGRAPHY REPORT - ELBOW (${side})\n`;
-    report += `==============================================\n\n`;
+    let report = `This ultrasonography study of ${side} elbow showed:\n\n`;
 
     const sections = [
         { label: "Lateral Elbow", ids: ["cwt", "hrj", "rcl"] },
-        { label: "Anterior Elbow", ids: ["ajr", "biceps", "median", "radial"] },
-        { label: "Medial Elbow", ids: ["cft", "ucl"] },
-        { label: "Posterior Elbow", ids: ["pf", "bursa", "triceps", "ulnar"] }
+        { label: "Anterior Elbow", ids: ["ajr", "median"] },
+        { label: "Medial Elbow", ids: ["cft", "huj", "ucl"] },
+        { label: "Posterior Elbow", ids: ["ulnar"] }
     ];
 
-    let hasAnyData = false;
-
     sections.forEach(sec => {
-        let sectionText = `[${sec.label}]\n`;
-        let sectionHasData = false;
-
+        let secContent = "";
         sec.ids.forEach(id => {
             const group = document.getElementById('group_' + id);
-            const checked = group.querySelectorAll('.form-check-input:checked');
-            
+            const checked = group.querySelectorAll('.finding:checked');
             if (checked.length > 0) {
-                sectionHasData = true;
-                hasAnyData = true;
                 const name = group.querySelector('.structure-name').innerText.replace(':', '');
-                let values = [];
-
-                checked.forEach(cb => {
-                    let val = cb.value;
-                    // Special Case: Tear
-                    if (val === 'Tear') {
-                        const tearType = group.querySelector(`input[name="${id}_tear"]:checked`);
-                        val = tearType ? `${tearType.value} tear` : 'Tear';
+                let vals = Array.from(checked).map(cb => {
+                    if (cb.value === 'Tear') {
+                        const type = group.querySelector(`input[name="${id}_tear"]:checked`);
+                        return type ? `${type.value} tear` : 'Tear';
                     }
-                    // Special Case: Entrapment
-                    if (val === 'Entrapment') {
-                        const loc = document.getElementById('loc_' + id).value;
-                        val = `Entrapment at ${loc || 'not specified'}`;
+                    if (cb.value === 'Entrapment') {
+                        return `Entrapment at ${document.getElementById('loc_'+id).value}`;
                     }
-                    // Special Case: Ulnar CSA
-                    if (val === 'CSA measured') {
-                        const r = document.getElementById('un_r').value;
-                        const l = document.getElementById('un_l').value;
-                        val = `CSA at cubital tunnel (R: ${r || '-'} mm², L: ${l || '-'} mm²)`;
-                    }
-                    values.push(val);
+                    return cb.value;
                 });
-                sectionText += `- ${name}: ${values.join(', ')}\n`;
+                secContent += `- ${name}: ${vals.join(', ')}\n`;
             }
         });
-
-        if (sectionHasData) {
-            report += sectionText + '\n';
-        }
+        if (secContent) report += `[${sec.label}]\n${secContent}\n`;
     });
 
-    if (!hasAnyData) {
-        report += "No findings selected.";
+    // Impression Section
+    const selectedImps = Array.from(document.querySelectorAll('.imp-check:checked')).map(cb => cb.value);
+    if (selectedImps.length > 0) {
+        report += `[Impression]\n`;
+        selectedImps.forEach(imp => report += `* ${imp}\n`);
     }
 
+    report += `\nPlease correlate with clinical presentation.`;
     document.getElementById('output').innerText = report;
 }
 
 function copyToClipboard() {
-    const text = document.getElementById('output').innerText;
-    if(!text) return;
-    navigator.clipboard.writeText(text).then(() => {
-        alert('Report copied to clipboard!');
-    });
+    navigator.clipboard.writeText(document.getElementById('output').innerText).then(() => alert('Copied!'));
 }
 </script>
-
 </body>
 </html>
