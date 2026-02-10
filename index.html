@@ -257,10 +257,11 @@
                 </div>
                 <div class="mb-3">
                     <label class="fw-bold d-block">3. Echogenicity:</label>
-                    <label class="me-3"><input type="radio" name="mass_echo" value="Heterogenous"> Heterogenous</label>
-                    <label class="me-3"><input type="radio" name="mass_echo" value="Hyperechoic"> Hyperechoic</label>
-                    <label class="me-3"><input type="radio" name="mass_echo" value="Hypoechoic"> Hypoechoic</label>
-                    <label class="me-3"><input type="radio" name="mass_echo" value="Anechoic"> Anechoic</label>
+                    <label class="me-3"><input type="checkbox" name="mass_echo" value="Heterogenous"> Heterogenous</label>
+                    <label class="me-3"><input type="checkbox" name="mass_echo" value="Hyperechoic"> Hyperechoic</label>
+                    <label class="me-3"><input type="checkbox" name="mass_echo" value="Hypoechoic"> Hypoechoic</label>
+                    <label class="me-3"><input type="checkbox" name="mass_echo" value="Anechoic"> Anechoic</label>
+                    <label class="me-3"><input type="checkbox" name="mass_echo" value="Cobblestone appearance"> Cobblestone appearance</label>
                 </div>
                 <div class="mb-3">
                     <label class="fw-bold d-block">4. Vascularity:</label>
@@ -564,8 +565,8 @@
         let sizeH = document.getElementById('mass_size_h').value;
         if(sizeL || sizeW || sizeH) text += `- Size: ${sizeL}x${sizeW}x${sizeH} mm\n`;
         
-        let echo = document.querySelector('input[name="mass_echo"]:checked');
-        if(echo) text += `- Echogenicity: ${echo.value}\n`;
+        let echoList = Array.from(document.querySelectorAll('input[name="mass_echo"]:checked')).map(cb => cb.value);
+        if(echoList.length > 0) text += `- Echogenicity: ${echoList.join(', ')}\n`;
 
         let vasc = document.querySelector('input[name="mass_vasc"]:checked');
         if(vasc) text += `- Vascularity: ${vasc.value}\n`;
@@ -598,7 +599,6 @@
 
         if(imps.length > 0) {
             imps.forEach(diag => {
-                // Construction: * [layer] [diagnosis] at [location]
                 let line = `${layer.toLowerCase()} ${diag}`; 
                 if(locFind) line += ` at ${locFind}`;
                 text += `* ${line}\n`;
