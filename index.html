@@ -1168,14 +1168,15 @@
     }
 
 
-    // --- Shoulder Logic ---
+// --- Shoulder Logic ---
     function generateShoulderFindings() {
         let text = "Findings:\n";
         const container = document.getElementById('section_shoulder');
         const intactIds = container.querySelectorAll('.struct-intact:checked');
         const pathologies = Array.from(container.querySelectorAll('.val:checked')).filter(cb => !cb.classList.contains('struct-intact'));
         
-        if (intacts.length >= 6 && pathologies.length === 0) {
+        // 【修正這裡】：將 intacts.length 改為 intactIds.length
+        if (intactIds.length >= 6 && pathologies.length === 0) {
              return text + `intact biceps LH tendon, AC joint, subscapularis, supraspinatus tendon, infraspinatus and posterior labrum\n`;
         }
 
@@ -1396,4 +1397,5 @@
 </script>
 
 </body>
-</html>
+</html>"
+
